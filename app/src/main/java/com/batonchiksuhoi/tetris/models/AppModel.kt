@@ -142,7 +142,7 @@ class AppModel {
             for(j in 0 until field[i].size) {
                 var status = getCellStatus(i, j)
                 if (status == CellConstants.EPHEMERAL.value) {
-                    status = curBlock?.blockColor?.byteValue
+                    status = curBlock?.staticValue
                     setCellStatus(i,j, status)
                 }
             }
@@ -227,8 +227,7 @@ class AppModel {
     }
 
     private fun generateBlock(){
-        curBlock = Block()
-        curBlock!!.setPosX()
+        curBlock = Block.createBlock()
     }
 
     enum class Statuses{
