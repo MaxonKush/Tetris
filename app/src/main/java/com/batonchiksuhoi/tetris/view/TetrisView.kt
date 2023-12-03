@@ -111,7 +111,7 @@ class TetrisView : View {
         canvas.drawRect(frameOffset.width.toFloat(),
                         frameOffset.height.toFloat(),
                         width - frameOffset.width.toFloat(),
-                        height - frameOffset.width.toFloat(),
+                        height - frameOffset.height.toFloat(),
                         paint)
     }
 
@@ -131,16 +131,16 @@ class TetrisView : View {
         paint.color = rgbColor
         val top: Float = (frameOffset.height + y * cellSize.height + BLOCK_OFFSET).toFloat()
         val left: Float = (frameOffset.width + x * cellSize.width + BLOCK_OFFSET).toFloat()
-        val bottom: Float = (frameOffset.width + (y + 1) * cellSize.width + BLOCK_OFFSET).toFloat()
-        val right: Float = (frameOffset.width + (x + 1) * cellSize.width + BLOCK_OFFSET).toFloat()
+        val bottom: Float = (frameOffset.height + (y + 1) * cellSize.height - BLOCK_OFFSET).toFloat()
+        val right: Float = (frameOffset.width + (x + 1) * cellSize.width - BLOCK_OFFSET).toFloat()
         val rectangle = RectF(left, top, right, bottom)
         canvas.drawRoundRect(rectangle, 4F, 4F, paint)
     }
 
-    override fun onSizeChanged(idthw: Int, height: Int, oldWidth: Int, oldHeight: Int) {
+    override fun onSizeChanged(width: Int, height: Int, oldWidth: Int, oldHeight: Int) {
         super.onSizeChanged(width, height, oldWidth, oldHeight)
         val cellWidth = (width - 2 * FRAME_OFFSET_BASE) / FieldConstants.COLUMN_COUNT.value
-        val cellHeight = (height - 2 * FRAME_OFFSET_BASE) / FieldConstants.COLUMN_COUNT.value
+        val cellHeight = (height - 2 * FRAME_OFFSET_BASE) / FieldConstants.ROW_COUNT.value
         val n = Math.min(cellWidth, cellHeight)
         this.cellSize = Dimension(n, n)
         val offsetX = (width - FieldConstants.COLUMN_COUNT.value * n) / 2
